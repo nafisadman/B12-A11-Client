@@ -1,54 +1,73 @@
-import axios from 'axios';
-import React, { use } from 'react';
-import toast from 'react-hot-toast';
-import useTitle from '../../hooks/useTitle';
-import { AuthContext } from '../../providers/AuthProvider';
-import { Navigate } from 'react-router';
-import GoogleIcon from '../../components/Icons/GoogleIcon';
+import axios from "axios";
+import React, { use } from "react";
+import toast from "react-hot-toast";
+import useTitle from "../../hooks/useTitle";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Navigate } from "react-router";
+import GoogleIcon from "../../components/Icons/GoogleIcon";
 
 const Registration = () => {
-  useTitle('Registration');
+  useTitle("Registration");
 
-  const { user, setUser, signInWithGoogle } = use(AuthContext);
+  const { user, setUser, createUser, updateUser, signInWithGoogle } = use(AuthContext);
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const photo = form.photo.files[0];
-    const password = form.password.value;
-
-    console.log('\nEmail: ', email, '\nPhoto: ', photo, '\nPassword: ', password);
-
-    // Photo
-    const imgbbUploadPromise = axios.post(
-      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
-      { image: photo },
-      { headers: { 'Content-Type': 'multipart/form-data' } }
-    );
-
-    try {
-      const imgbbResponse = await toast.promise(imgbbUploadPromise, {
-        loading: 'Uploading image...',
-        success: <b>Image uploaded successfully!</b>,
-        error: <b>Failed to upload image.</b>,
-      });
-      console.log(imgbbResponse.data.data.display_url);
-    } catch (error) {
-      console.log(error);
-    }
-    return;
-  };
-
+  // Google
   const handleRegisterWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
-        Navigate('/');
+        // Navigate('/');
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  // Form
+  const handleRegister = async (e) => {
+    // Form
+    e.preventDefault();
+
+    const form = e.target;
+
+    const email = form.email.value;
+    const name = form.name.value;
+    const photo = form.photo.files[0];
+    const password = form.password.value;
+
+    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password);
+
+    // Photo
+    const res = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+      { image: photo },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+
+    const userPhotoUrl = res.data.data.display_url;
+    console.log(userPhotoUrl);
+
+    if (res.data.success == true) {
+      createUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          updateUser({ displayName: name, photoUrl: userPhotoUrl })
+            .then(() => {
+              setUser({ ...user, displayName: name, photoUrl: userPhotoUrl });
+            })
+            .catch((error) => {
+              alert(error.errorCode, error.errorMessage);
+              setUser(user);
+            });
+        })
+        .catch((error) => {
+          alert(error.errorCode, error.errorMessage);
+        });
+    }
+
+    console.log("Process Completed");
   };
 
   return (
@@ -71,6 +90,8 @@ const Registration = () => {
             <form onSubmit={handleRegister} className="fieldset">
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="Email" required />
+              <label className="label">Name</label>
+              <input name="name" type="text" className="input" placeholder="Name" required />
               <label className="label">Photo</label>
               <input name="photo" type="file" className="file-input" placeholder="Photo" />
               <label className="label">Password</label>
