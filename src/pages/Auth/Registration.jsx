@@ -49,6 +49,13 @@ const Registration = () => {
     const userPhotoUrl = res.data.data.display_url;
     console.log(userPhotoUrl);
 
+    const formData = {
+      email,
+      name,
+      userPhotoUrl,
+      password,
+    };
+
     if (res.data.success == true) {
       createUser(email, password)
         .then((result) => {
@@ -56,6 +63,10 @@ const Registration = () => {
           updateUser({ displayName: name, photoUrl: userPhotoUrl })
             .then(() => {
               setUser({ ...user, displayName: name, photoUrl: userPhotoUrl });
+              axios
+                .post("http://localhost:5000/users", formData)
+                .then((res) => console.log(res.data))
+                .catch((error) => console.log(error));
             })
             .catch((error) => {
               alert(error.errorCode, error.errorMessage);
