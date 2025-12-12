@@ -34,8 +34,9 @@ const Registration = () => {
     const name = form.name.value;
     const photo = form.photo.files[0];
     const password = form.password.value;
+    const bloodGroup = form.bloodGroup.value;
 
-    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password);
+    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password, "\nRole: ", bloodGroup);
 
     // Photo
     const res = await axios.post(
@@ -54,6 +55,7 @@ const Registration = () => {
       name,
       userPhotoUrl,
       password,
+      bloodGroup,
     };
 
     if (res.data.success == true) {
@@ -105,6 +107,21 @@ const Registration = () => {
               <input name="name" type="text" className="input" placeholder="Name" required />
               <label className="label">Photo</label>
               <input name="photo" type="file" className="file-input" placeholder="Photo" />
+              {/* Blood Group Selector */}
+              <label className="label">Blood Group</label>
+              <select name="bloodGroup" defaultValue="" className="select">
+                <option value="" disabled>
+                  Choose Blood Group
+                </option>
+                <option value="a+">A+</option>
+                <option value="a-">A-</option>
+                <option value="b+">B+</option>
+                <option value="b-">B-</option>
+                <option value="ab+">AB+</option>
+                <option value="ab-">AB-</option>
+                <option value="o+">O+</option>
+                <option value="o-">O-</option>
+              </select>
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" required />
               <div>

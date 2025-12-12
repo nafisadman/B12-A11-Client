@@ -1,6 +1,7 @@
-import React, { use } from 'react';
-import DropdownIcon from './Icons/DropdownIcon';
-import { AuthContext } from '../providers/AuthProvider';
+import React, { use } from "react";
+import DropdownIcon from "./Icons/DropdownIcon";
+import { AuthContext } from "../providers/AuthProvider";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const { user } = use(AuthContext);
@@ -57,8 +58,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
-        {user ? 'Logged in' : 'Not logged in'}
+        {user ? <Link className="btn">Logout</Link> : <Link to={`/login`} className="btn">Login</Link>}
       </div>
     </div>
   );
