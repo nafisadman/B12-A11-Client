@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useTitle from "../../hooks/useTitle";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -10,6 +10,20 @@ const Registration = () => {
   useTitle("Registration");
 
   const { user, setUser, createUser, updateUser, signInWithGoogle } = use(AuthContext);
+  const [upazilas, setUpazilas] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [upazila, setUpazila] = useState("");
+  const [district, setDistrict] = useState("");
+
+  useEffect(() => {
+    axios.get("/upazilas.json").then((res) => {
+      setUpazilas(res.data.upazilas);
+    });
+
+    axios.get("/districts.json").then((res) => {
+      setDistricts(res.data.districts);
+    });
+  }, []);
 
   // Google
   const handleRegisterWithGoogle = () => {
@@ -36,7 +50,7 @@ const Registration = () => {
     const password = form.password.value;
     const bloodGroup = form.bloodGroup.value;
 
-    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password, "\nRole: ", bloodGroup);
+    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password, "\nBlood Group: ", bloodGroup);
 
     // Photo
     const res = await axios.post(
@@ -56,7 +70,11 @@ const Registration = () => {
       userPhotoUrl,
       password,
       bloodGroup,
+      district,
+      upazila,
     };
+
+    console.log(formData);
 
     if (res.data.success == true) {
       createUser(email, password)
@@ -89,8 +107,7 @@ const Registration = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Register now!</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In
-            deleniti eaque aut repudiandae et a id nisi.
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -121,6 +138,32 @@ const Registration = () => {
                 <option value="ab-">AB-</option>
                 <option value="o+">O+</option>
                 <option value="o-">O-</option>
+              </select>
+              {/* District Selector */}
+              <label className="label">District</label>
+              <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" defaultValue="" className="select">
+                <option value="" disabled>
+                  Choose District
+                </option>
+                {districts.map((district) => (
+                  <option value={district?.id} key={district?.id}>
+                    {district?.name}
+                  </option>
+                ))}
+              </select>
+              {/* Upazila Selector */}
+              <label className="label">Upazila</label>
+              <select value={upazila} onChange={(e) => setUpazila(e.target.value)} name="upazila" id="" defaultValue="" className="select">
+                <option value="" disabled>
+                  Choose Upazila
+                </option>
+                {upazilas
+                  .filter((upazila) => upazila?.district_id == district)
+                  .map((upazila) => (
+                    <option value={upazila?.id} key={upazila?.id}>
+                      {upazila?.name}
+                    </option>
+                  ))}
               </select>
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" required />
