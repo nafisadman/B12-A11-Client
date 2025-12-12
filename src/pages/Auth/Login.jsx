@@ -37,6 +37,7 @@ const Login = () => {
               <GoogleIcon />
               Login with Google
             </button>
+            <div className="divider">OR</div>
             <form onSubmit={handleLogin} className="fieldset">
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="Email" />
