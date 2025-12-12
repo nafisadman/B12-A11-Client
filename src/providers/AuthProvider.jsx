@@ -7,6 +7,8 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import axios from "axios";
 
@@ -33,6 +35,14 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, updatedData);
   };
 
+  const signIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logOut = () => {
+    return signOut(auth);
+  }
+
   const getRole = async () => {
     await axios.get(`http://localhost:5000/users/role/${currentUser.email}`).then((res) => {
       setRole(res.data.role);
@@ -58,6 +68,8 @@ const AuthProvider = ({ children }) => {
     setUser,
     createUser,
     updateUser,
+    signIn,
+    logOut,
     signInWithGoogle,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;

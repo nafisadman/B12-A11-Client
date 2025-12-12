@@ -39,7 +39,6 @@ const Registration = () => {
 
   // Form
   const handleRegister = async (e) => {
-    // Form
     e.preventDefault();
 
     const form = e.target;
