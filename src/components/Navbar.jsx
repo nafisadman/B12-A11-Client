@@ -1,7 +1,7 @@
 import React, { use } from "react";
 import DropdownIcon from "./Icons/DropdownIcon";
 import { AuthContext } from "../providers/AuthProvider";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
@@ -20,7 +20,7 @@ const Navbar = () => {
           </div>
           <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
             <li>
-              <a>Item 1</a>
+              <NavLink to='/dashboard'>Dashboard</NavLink>
             </li>
             <li>
               <a>Parent</a>
@@ -43,7 +43,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
+            <NavLink to='/dashboard'>Dashboard</NavLink>
           </li>
           <li>
             <details>

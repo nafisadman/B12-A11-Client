@@ -3,17 +3,20 @@ import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
 import Registration from "../pages/Auth/Registration";
+import UserDashboard from "../pages/Dashboard/UserDashboard";
+import AddRequest from "../pages/Dashboard/AddRequest";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
     children: [
-        {
-            path: "/",
-            Component: Home
-        }
-    ]
+      {
+        path: "/",
+        Component: Home,
+      },
+    ],
   },
   {
     path: "/auth",
@@ -21,14 +24,28 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/auth/login",
-        Component: Login
+        Component: Login,
       },
       {
         path: "/auth/registration",
-        Component: Registration
-      }
-    ]
-  }
+        Component: Registration,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "/dashboard",
+        Component: UserDashboard,
+      },
+      {
+        path: "/dashboard/add-request",
+        Component: AddRequest,
+      },
+    ],
+  },
 ]);
 
 export default router;
