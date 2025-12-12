@@ -10,6 +10,7 @@ const Registration = () => {
   useTitle("Registration");
 
   const { user, setUser, createUser, updateUser, signInWithGoogle } = use(AuthContext);
+  
   const [upazilas, setUpazilas] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazila, setUpazila] = useState("");
@@ -47,7 +48,7 @@ const Registration = () => {
     const name = form.name.value;
     const photo = form.photo.files[0];
     const password = form.password.value;
-    const bloodGroup = form.bloodGroup.value;
+    const bloodGroup = form.blood_group.value;
 
     console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password, "\nBlood Group: ", bloodGroup);
 
@@ -119,16 +120,16 @@ const Registration = () => {
             <div className="divider">OR</div>
             <form onSubmit={handleRegister} className="fieldset">
               <label className="label">Email</label>
-              <input name="email" type="email" className="input" placeholder="Email" required />
+              <input name="email" type="email" className="input" placeholder="rahim@email.com" required />
               <label className="label">Name</label>
-              <input name="name" type="text" className="input" placeholder="Name" required />
+              <input name="name" type="text" className="input" placeholder="Rahim" required />
               <label className="label">Photo</label>
               <input name="photo" type="file" className="file-input" placeholder="Photo" />
               {/* Blood Group Selector */}
               <label className="label">Blood Group</label>
-              <select name="bloodGroup" defaultValue="" className="select">
+              <select name="blood_group" defaultValue="" className="select">
                 <option value="" disabled>
-                  Choose Blood Group
+                  -- Select Blood Group --
                 </option>
                 <option value="a+">A+</option>
                 <option value="a-">A-</option>
@@ -143,7 +144,7 @@ const Registration = () => {
               <label className="label">District</label>
               <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" defaultValue="" className="select">
                 <option value="" disabled>
-                  Choose District
+                  -- Select District --
                 </option>
                 {districts.map((district) => (
                   <option value={district?.id} key={district?.id}>
@@ -155,7 +156,7 @@ const Registration = () => {
               <label className="label">Upazila</label>
               <select value={upazila} onChange={(e) => setUpazila(e.target.value)} name="upazila" id="" defaultValue="" className="select">
                 <option value="" disabled>
-                  Choose Upazila
+                  -- Select Upazila --
                 </option>
                 {upazilas
                   .filter((upazila) => upazila?.district_id == district)
