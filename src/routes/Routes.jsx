@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         Component: UserDashboard,
       },
       {
-        path: "/dashboard/add-request",
+        path: "/dashboard/create-donation-request",
         Component: AddRequest,
       },
     ],

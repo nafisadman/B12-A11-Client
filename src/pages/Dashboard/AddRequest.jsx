@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
-import useAxios from "../../hooks/useAxios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddRequest = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +11,7 @@ const AddRequest = () => {
   const [upazila, setUpazila] = useState("");
   const [district, setDistrict] = useState("");
 
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     axios.get("/upazilas.json").then((res) => {
@@ -53,7 +53,7 @@ const AddRequest = () => {
       request_status: "pending",
     };
 
-    axiosInstance
+    axiosSecure
       .post("/requests", formData)
       .then((res) => {
         console.log(res.data.insertedId);
@@ -105,7 +105,22 @@ const AddRequest = () => {
                     </option>
                   ))}
               </select>
-              <label className="label">Hospital Name</label>
+              {/* Hospital */}
+              <label className="label">
+                Hospital Name{" "}
+                <div className="dropdown dropdown-start">
+                  <div tabIndex={0} role="button" className="btn btn-circle btn-ghost btn-xs text-info">
+                    <svg tabIndex={0} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="h-4 w-4 stroke-current">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div tabIndex={0} className="card card-sm dropdown-content bg-base-100 rounded-box z-1 w-64 shadow-sm">
+                    <div tabIndex={0} className="card-body">
+                      <p>Where the donor will go to donate blood</p>
+                    </div>
+                  </div>
+                </div>
+              </label>
               <input name="hospital_name" type="text" className="input" placeholder="Dhaka Medical College" />
               <label className="label">Full Address Line</label>
               <input name="full_address_line" type="text" className="input" placeholder="Secretariat Rd, Dhaka 1000" />
