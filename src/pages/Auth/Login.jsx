@@ -3,7 +3,7 @@ import GoogleIcon from "../../components/Icons/GoogleIcon";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
-  const { signIn, signOut } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   // Form
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -32,12 +32,6 @@ const Login = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            {/* Google */}
-            <button className="btn bg-white text-black border-[#e5e5e5]">
-              <GoogleIcon />
-              Login with Google
-            </button>
-            <div className="divider">OR</div>
             <form onSubmit={handleLogin} className="fieldset">
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="Email" />

@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import {
   getAuth,
-  signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   updateProfile,
@@ -12,7 +11,6 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 
-const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
 export const AuthContext = createContext();
@@ -20,11 +18,6 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState("");
-
-  // Google
-  const signInWithGoogle = () => {
-    return signInWithPopup(auth, googleProvider);
-  };
 
   // Form
   const createUser = (email, password) => {
@@ -41,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     return signOut(auth);
-  }
+  };
 
   const getRole = async () => {
     await axios.get(`http://localhost:5000/users/role/${currentUser.email}`).then((res) => {
@@ -70,7 +63,6 @@ const AuthProvider = ({ children }) => {
     updateUser,
     signIn,
     logOut,
-    signInWithGoogle,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;
 };

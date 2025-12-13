@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 
 const AddRequest = () => {
   const { user } = useContext(AuthContext);
-  
+
   const [upazilas, setUpazilas] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [upazila, setUpazila] = useState("");
   const [district, setDistrict] = useState("");
+
+  const axiosInstance = useAxios();
 
   useEffect(() => {
     axios.get("/upazilas.json").then((res) => {
@@ -33,8 +36,8 @@ const AddRequest = () => {
     const bloodGroup = form.blood_group.value;
     const donationDate = form.donation_date.value;
     const donationTime = form.donation_time.value;
-    const requestMessage = form.request_message.value; 
-    
+    const requestMessage = form.request_message.value;
+
     const formData = {
       requesterName,
       requesterEmail,
@@ -47,9 +50,16 @@ const AddRequest = () => {
       donationDate,
       donationTime,
       requestMessage,
-      request_status:'pending',
-    }
-  }
+      request_status: "pending",
+    };
+
+    axiosInstance
+      .post("/requests", formData)
+      .then((res) => {
+        console.log(res.data.insertedId);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -64,9 +74,9 @@ const AddRequest = () => {
           <div className="card-body">
             <form onSubmit={handleRequest} className="fieldset">
               <label className="label">Requester Name</label>
-              <input name="requester_name" type="text" className="input" value={user?.displayName} readOnly />
+              <input name="requester_name" type="text" className="input" value={user?.displayName} readOnly disabled />
               <label className="label">Requester Email</label>
-              <input name="requester_email" type="email" className="input" value={user?.email} readOnly />
+              <input name="requester_email" type="email" className="input" value={user?.email} readOnly disabled />
               <label className="label">Recipient Name</label>
               <input name="recipient_name" type="text" className="input" placeholder="Karim" />
               {/* District Selector */}

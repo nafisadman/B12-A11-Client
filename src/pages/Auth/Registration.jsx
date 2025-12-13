@@ -9,7 +9,7 @@ import GoogleIcon from "../../components/Icons/GoogleIcon";
 const Registration = () => {
   useTitle("Registration");
 
-  const { user, setUser, createUser, updateUser, signInWithGoogle } = use(AuthContext);
+  const { setUser, createUser, updateUser } = use(AuthContext);
   
   const [upazilas, setUpazilas] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -25,18 +25,6 @@ const Registration = () => {
       setDistricts(res.data.districts);
     });
   }, []);
-
-  // Google
-  const handleRegisterWithGoogle = () => {
-    signInWithGoogle()
-      .then((result) => {
-        console.log(result.user);
-        // Navigate('/');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   // Form
   const handleRegister = async (e) => {
@@ -112,12 +100,6 @@ const Registration = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            {/* Google */}
-            <button onClick={handleRegisterWithGoogle} className="btn bg-white text-black border-[#e5e5e5]">
-              <GoogleIcon />
-              Register with Google
-            </button>
-            <div className="divider">OR</div>
             <form onSubmit={handleRegister} className="fieldset">
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="rahim@email.com" required />
