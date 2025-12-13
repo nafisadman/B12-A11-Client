@@ -6,6 +6,7 @@ import Registration from "../pages/Auth/Registration";
 import UserDashboard from "../pages/Dashboard/UserDashboard";
 import AddRequest from "../pages/Dashboard/AddRequest";
 import DashboardLayout from "../layouts/DashboardLayout";
+import AllUsers from "../pages/Dashboard/AllUsers";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/create-donation-request",
         Component: AddRequest,
+      },
+      {
+        path: "/dashboard/all-users",
+        Component: AllUsers,
       },
     ],
   },
