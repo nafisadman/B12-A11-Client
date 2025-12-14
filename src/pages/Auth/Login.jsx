@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import GoogleIcon from "../../components/Icons/GoogleIcon";
 import { AuthContext } from "../../providers/AuthProvider";
+import { Link } from "react-router";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const Login = () => {
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <p>Don't have an Account? <Link to='/auth/registration' className="link link-hover link-info">Sign Up</Link></p>
               </div>
               <button className="btn btn-neutral mt-4">Login</button>
             </form>

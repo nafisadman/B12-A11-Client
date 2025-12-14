@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import SidebarToggleIcon from "../components/Icons/SidebarToggleIcon";
 import { Outlet } from "react-router";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
+import { AuthContext } from "../providers/AuthProvider";
 
 const DashboardLayout = () => {
+  const { role } = useContext(AuthContext);
+  console.log('User Role: ', role);
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -15,7 +18,7 @@ const DashboardLayout = () => {
             <label htmlFor="my-drawer-4" aria-label="open sidebar" className="btn btn-square btn-ghost">
               <SidebarToggleIcon></SidebarToggleIcon>
             </label>
-            <div className="px-4">Page Title</div>
+            <div className="px-4">{role} Dashboard</div>
           </nav>
           {/* Page content here */}
           <div className="p-4">

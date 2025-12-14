@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeIcon from "../components/Icons/HomeIcon";
 import SettingsIcon from "../components/Icons/SettingsIcon";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import CreateIcon from "./Icons/CreateIcon";
 import AllUsersIcon from "./Icons/AllUsersIcon";
 import DashboardIcon from "./Icons/DashboardIcon";
+import { AuthContext } from "../providers/AuthProvider";
+import LogoutIcon from "./Icons/LogoutIcon";
 
 const Sidebar = () => {
+  const { role } = useContext(AuthContext);
+
   return (
     <div className="drawer-side is-drawer-close:overflow-visible">
       <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -21,6 +25,8 @@ const Sidebar = () => {
             </NavLink>
           </li>
 
+          <div className="divider"></div>
+
           {/* List item */}
           <li>
             <NavLink to="/dashboard" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Dashboard">
@@ -30,28 +36,24 @@ const Sidebar = () => {
           </li>
 
           {/* List item */}
-          <li>
-            <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
-              <SettingsIcon></SettingsIcon>
-              <span className="is-drawer-close:hidden">Settings</span>
-            </button>
-          </li>
+          {role == "Donor" && (
+            <li>
+              <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Request">
+                <CreateIcon></CreateIcon>
+                <span className="is-drawer-close:hidden">Add Request</span>
+              </NavLink>
+            </li>
+          )}
 
           {/* List item */}
-          <li>
-            <NavLink to="/dashboard/all-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
-              <AllUsersIcon></AllUsersIcon>
-              <span className="is-drawer-close:hidden">All Users</span>
-            </NavLink>
-          </li>
-
-          {/* List item */}
-          <li>
-            <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Request">
-              <CreateIcon></CreateIcon>
-              <span className="is-drawer-close:hidden">Add Request</span>
-            </NavLink>
-          </li>
+          {role == "Admin" && (
+            <li>
+              <NavLink to="/dashboard/all-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
+                <AllUsersIcon></AllUsersIcon>
+                <span className="is-drawer-close:hidden">All Users</span>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </div>

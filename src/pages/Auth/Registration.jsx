@@ -3,7 +3,7 @@ import React, { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useTitle from "../../hooks/useTitle";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Navigate } from "react-router";
+import { Link, Navigate } from "react-router";
 import GoogleIcon from "../../components/Icons/GoogleIcon";
 
 const Registration = () => {
@@ -151,7 +151,7 @@ const Registration = () => {
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" required />
               <div>
-                <a className="link link-hover">Forgot password?</a>
+                <p>Already have an Account? <Link to='/auth/login' className="link link-hover link-info">Sign In</Link></p>
               </div>
               <button className="btn btn-neutral mt-4">Register</button>
             </form>
