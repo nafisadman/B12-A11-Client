@@ -8,6 +8,7 @@ import AddRequest from "../pages/Dashboard/AddRequest";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AllUsers from "../pages/Dashboard/AllUsers";
 import PrivateRoute from "./PrivateRoute";
+import MyRequests from "../pages/Dashboard/MyRequests";
 
 const router = createBrowserRouter([
   {
@@ -36,13 +37,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
         Component: UserDashboard,
       },
       // Donor Dashboard
+      {
+        path: "/dashboard/my-donation-requests",
+        Component: MyRequests,
+      },
       {
         path: "/dashboard/create-donation-request",
         Component: AddRequest,

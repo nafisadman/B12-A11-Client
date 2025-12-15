@@ -7,6 +7,7 @@ import AllUsersIcon from "./Icons/AllUsersIcon";
 import DashboardIcon from "./Icons/DashboardIcon";
 import { AuthContext } from "../providers/AuthProvider";
 import LogoutIcon from "./Icons/LogoutIcon";
+import DonationRequestsIcon from "./Icons/DonationRequestsIcon";
 
 const Sidebar = () => {
   const { role } = useContext(AuthContext);
@@ -37,12 +38,20 @@ const Sidebar = () => {
 
           {/* List item */}
           {role == "Donor" && (
+            <>
+            <li>
+              <NavLink to="/dashboard/my-donation-requests" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Donation Requests">
+                <DonationRequestsIcon></DonationRequestsIcon>
+                <span className="is-drawer-close:hidden">My Donation Requests</span>
+              </NavLink>
+            </li>
             <li>
               <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Request">
                 <CreateIcon></CreateIcon>
                 <span className="is-drawer-close:hidden">Add Request</span>
               </NavLink>
             </li>
+            </>
           )}
 
           {/* List item */}
