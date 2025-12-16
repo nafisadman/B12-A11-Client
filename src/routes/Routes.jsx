@@ -9,6 +9,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AllUsers from "../pages/Dashboard/AllUsers";
 import PrivateRoute from "./PrivateRoute";
 import MyRequests from "../pages/Dashboard/MyRequests";
+import Donate from "../pages/Home/Donate";
+import PaymentSuccess from "../pages/Home/PaymentSuccess";
+import PaymentCancelled from "../pages/Home/PaymentCancelled";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +21,18 @@ const router = createBrowserRouter([
       {
         path: "/",
         Component: Home,
+      },
+      {
+        path: "/donate",
+        Component: Donate,
+      },
+      {
+        path: "/payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "/payment-cancelled",
+        Component: PaymentCancelled,
       },
     ],
   },

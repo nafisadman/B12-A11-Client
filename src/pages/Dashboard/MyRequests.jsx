@@ -46,7 +46,7 @@ const MyRequests = () => {
           <tbody>
             {myRequests.map((myRequest, index) => (
               <tr>
-                <th>{index + 1}</th>
+                <th>{(currentPage * 10) + (index + 1) - 10}</th>
                 <td>{myRequest.recipientName}</td>
                 <td>{myRequest.hospitalName}</td>
                 <td>{myRequest.bloodGroup}</td>
@@ -57,13 +57,17 @@ const MyRequests = () => {
       </div>
       {/* Pagination */}
       <div>
-        <button onClick={handlePrev} className="btn" disabled={currentPage === 1}>Prev</button>
+        <button onClick={handlePrev} className="btn" disabled={currentPage === 1}>
+          Prev
+        </button>
         {pages.map((page) => (
           <button className={`btn ${page === currentPage ? "btn-active" : ""}`} onClick={() => setCurrentPage(page)}>
             {page}
           </button>
         ))}
-        <button onClick={handleNext} className="btn" disabled={currentPage === pages.length}>Next</button>
+        <button onClick={handleNext} className="btn" disabled={currentPage === pages.length}>
+          Next
+        </button>
       </div>
     </div>
   );
