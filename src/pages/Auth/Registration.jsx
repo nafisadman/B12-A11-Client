@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import useTitle from "../../hooks/useTitle";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, Navigate } from "react-router";
-import GoogleIcon from "../../components/Icons/GoogleIcon";
 
 const Registration = () => {
   useTitle("Registration");
@@ -159,7 +157,7 @@ const Registration = () => {
               <div>
                 <p>
                   Already have an Account?{" "}
-                  <Link to="/auth/login" className="link link-hover link-info">
+                  <Link to="/auth/login" className="link link-primary">
                     Sign In
                   </Link>
                 </p>

@@ -39,7 +39,7 @@ const Search = () => {
   return (
     <div>
       {/* Search Filter */}
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Search now!</h1>
@@ -53,7 +53,7 @@ const Search = () => {
                 {/* Blood Group Selector */}
                 <label className="label">Blood Group</label>
                 <select value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} name="blood_group" defaultValue="" className="select">
-                  <option value="" disabled>
+                  <option value="">
                     -- Select Blood Group --
                   </option>
                   {bloodGroups?.map((bloodGroup) => (
@@ -65,7 +65,7 @@ const Search = () => {
                 {/* District Selector */}
                 <label className="label">District</label>
                 <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" defaultValue="" className="select">
-                  <option value="" disabled>
+                  <option value="">
                     -- Select District --
                   </option>
                   {districts.map((district) => (
@@ -77,7 +77,7 @@ const Search = () => {
                 {/* Upazila Selector */}
                 <label className="label">Upazila</label>
                 <select value={upazila} onChange={(e) => setUpazila(e.target.value)} name="upazila" id="" defaultValue="" className="select">
-                  <option value="" disabled>
+                  <option value="">
                     -- Select Upazila --
                   </option>
                   {upazilas
@@ -95,18 +95,21 @@ const Search = () => {
         </div>
       </div>
       {/* Search Results */}
-      <div className="">
-        {searchResults.map((searchResult) => (
-          <div className="card card-border bg-base-100 w-96">
-            <div className="card-body">
-              <h2 className="card-title">Card Title</h2>
-              <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Buy Now</button>
+      <div className="min-h-screen">
+        {/* Container */}
+        <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {searchResults.map((searchResult) => (
+            <div className="card bg-base-100 w-full shadow-sm">
+              <div className="card-body">
+                <h2 className="card-title">{upazilas.find(u => u.id == searchResult?.upazila)?.name}, {districts.find(d => d.id == searchResult?.district)?.name}</h2>
+                <p>{searchResult?.requestMessage}</p>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-primary">{bloodGroups.find(g => g.id == searchResult?.bloodGroup)?.type}</button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

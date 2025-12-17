@@ -39,7 +39,7 @@ const Login = () => {
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" />
               <div>
-                <p>Don't have an Account? <Link to='/auth/registration' className="link link-hover link-info">Sign Up</Link></p>
+                <p>Don't have an Account? <Link to='/auth/registration' className="link link-primary">Sign Up</Link></p>
               </div>
               <button className="btn btn-neutral mt-4">Login</button>
             </form>
