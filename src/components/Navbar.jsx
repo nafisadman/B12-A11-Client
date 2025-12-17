@@ -23,28 +23,19 @@ const Navbar = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/">Search</NavLink>
+              <NavLink to="/search">Search</NavLink>
+            </li>
+            <li>
+              <NavLink to="/requests">Requests</NavLink>
             </li>
             <li>
               <NavLink to="/donate">Donate</NavLink>
             </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
-            </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">daisyUI</Link>
+        <Link to="/" className="btn btn-ghost text-xl">
+          daisyUI
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -52,28 +43,13 @@ const Navbar = () => {
             <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/">Search</NavLink>
+            <NavLink to="/search">Search</NavLink>
           </li>
           <li>
-            <NavLink to="/donate">
-              Donate
-            </NavLink>
-          </li>
+              <NavLink to="/requests">Requests</NavLink>
+            </li>
           <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2 bg-base-100 w-40 z-1">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Item 3</a>
+            <NavLink to="/donate">Donate</NavLink>
           </li>
         </ul>
       </div>
@@ -92,6 +68,9 @@ const Navbar = () => {
                     Profile
                     <span className="badge">New</span>
                   </a>
+                </li>
+                <li>
+                  <NavLink to="/dashboard">Dashboard</NavLink>
                 </li>
                 <li>
                   <a>Settings</a>

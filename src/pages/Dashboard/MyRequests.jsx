@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
 
 const MyRequests = () => {
+  const [bloodGroups, setBloodGroups] = useState([]);
   const [totalRequests, setTotalRequests] = useState(0);
   const [myRequests, setMyRequests] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -10,6 +12,10 @@ const MyRequests = () => {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    axios.get("/blood-groups.json").then((res) => {
+      setBloodGroups(res.data.bloodGroups);
+    });
+
     axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}`).then((res) => {
       setMyRequests(res.data.result);
       setTotalRequests(res.data.totalRequest);
@@ -28,6 +34,8 @@ const MyRequests = () => {
   const handleNext = () => {
     if (currentPage < pages.length) setCurrentPage(currentPage + 1);
   };
+
+  console.log(bloodGroups);
 
   return (
     <div>
@@ -49,7 +57,7 @@ const MyRequests = () => {
                 <th>{(currentPage * 10) + (index + 1) - 10}</th>
                 <td>{myRequest.recipientName}</td>
                 <td>{myRequest.hospitalName}</td>
-                <td>{myRequest.bloodGroup}</td>
+                <td>{bloodGroups.find(g => g.id == myRequest.bloodGroup)?.type}</td>
               </tr>
             ))}
           </tbody>
@@ -58,7 +66,7 @@ const MyRequests = () => {
       {/* Pagination */}
       <div>
         <button onClick={handlePrev} className="btn" disabled={currentPage === 1}>
-          Prev
+          Previous
         </button>
         {pages.map((page) => (
           <button className={`btn ${page === currentPage ? "btn-active" : ""}`} onClick={() => setCurrentPage(page)}>

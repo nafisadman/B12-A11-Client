@@ -10,13 +10,19 @@ const Registration = () => {
   useTitle("Registration");
 
   const { setUser, createUser, updateUser } = use(AuthContext);
-  
-  const [upazilas, setUpazilas] = useState([]);
+
+  const [bloodGroups, setBloodGroups] = useState([]);
   const [districts, setDistricts] = useState([]);
-  const [upazila, setUpazila] = useState("");
+  const [upazilas, setUpazilas] = useState([]);
+  const [bloodGroup, setBloodGroup] = useState("");
   const [district, setDistrict] = useState("");
+  const [upazila, setUpazila] = useState("");
 
   useEffect(() => {
+    axios.get("/blood-groups.json").then((res) => {
+      setBloodGroups(res.data.bloodGroups);
+    });
+
     axios.get("/upazilas.json").then((res) => {
       setUpazilas(res.data.upazilas);
     });
@@ -36,9 +42,8 @@ const Registration = () => {
     const name = form.name.value;
     const photo = form.photo.files[0];
     const password = form.password.value;
-    const bloodGroup = form.blood_group.value;
 
-    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password, "\nBlood Group: ", bloodGroup);
+    console.log("\nEmail: ", email, "\nPhoto: ", photo, "\nPassword: ", password);
 
     // Photo
     const res = await axios.post(
@@ -57,9 +62,9 @@ const Registration = () => {
       name,
       userPhotoUrl,
       password,
-      bloodGroup,
-      district,
-      upazila,
+      bloodGroup: bloodGroup,
+      district: district,
+      upazila: upazila,
     };
 
     console.log(formData);
@@ -78,6 +83,7 @@ const Registration = () => {
             })
             .catch((error) => {
               alert(error.errorCode, error.errorMessage);
+              console.log(error);
               setUser(user);
             });
         })
@@ -101,6 +107,7 @@ const Registration = () => {
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
             <form onSubmit={handleRegister} className="fieldset">
+              {/* Personal Information */}
               <label className="label">Email</label>
               <input name="email" type="email" className="input" placeholder="rahim@email.com" required />
               <label className="label">Name</label>
@@ -109,18 +116,15 @@ const Registration = () => {
               <input name="photo" type="file" className="file-input" placeholder="Photo" />
               {/* Blood Group Selector */}
               <label className="label">Blood Group</label>
-              <select name="blood_group" defaultValue="" className="select">
+              <select value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} name="blood_group" defaultValue="" className="select">
                 <option value="" disabled>
                   -- Select Blood Group --
                 </option>
-                <option value="a+">A+</option>
-                <option value="a-">A-</option>
-                <option value="b+">B+</option>
-                <option value="b-">B-</option>
-                <option value="ab+">AB+</option>
-                <option value="ab-">AB-</option>
-                <option value="o+">O+</option>
-                <option value="o-">O-</option>
+                {bloodGroups?.map((bloodGroup) => (
+                  <option value={bloodGroup?.id} key={bloodGroup?.id}>
+                    {bloodGroup?.type}
+                  </option>
+                ))}
               </select>
               {/* District Selector */}
               <label className="label">District</label>
@@ -150,8 +154,15 @@ const Registration = () => {
               </select>
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" required />
+              <label className="label">Confirm Password</label>
+              <input name="confirmPassword" type="password" className="input" placeholder="Password" required />
               <div>
-                <p>Already have an Account? <Link to='/auth/login' className="link link-hover link-info">Sign In</Link></p>
+                <p>
+                  Already have an Account?{" "}
+                  <Link to="/auth/login" className="link link-hover link-info">
+                    Sign In
+                  </Link>
+                </p>
               </div>
               <button className="btn btn-neutral mt-4">Register</button>
             </form>

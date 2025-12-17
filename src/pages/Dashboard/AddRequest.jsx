@@ -6,14 +6,20 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 const AddRequest = () => {
   const { user } = useContext(AuthContext);
 
-  const [upazilas, setUpazilas] = useState([]);
+  const [bloodGroups, setBloodGroups] = useState([]);
   const [districts, setDistricts] = useState([]);
-  const [upazila, setUpazila] = useState("");
+  const [upazilas, setUpazilas] = useState([]);
+  const [bloodGroup, setBloodGroup] = useState("");
   const [district, setDistrict] = useState("");
+  const [upazila, setUpazila] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
+    axios.get("/blood-groups.json").then((res) => {
+      setBloodGroups(res.data.bloodGroups);
+    });
+
     axios.get("/upazilas.json").then((res) => {
       setUpazilas(res.data.upazilas);
     });
@@ -33,7 +39,6 @@ const AddRequest = () => {
     const recipientName = form.recipient_name.value;
     const hospitalName = form.hospital_name.value;
     const fullAdressLine = form.full_address_line.value;
-    const bloodGroup = form.blood_group.value;
     const donationDate = form.donation_date.value;
     const donationTime = form.donation_time.value;
     const requestMessage = form.request_message.value;
@@ -46,7 +51,7 @@ const AddRequest = () => {
       fullAdressLine,
       district,
       upazila,
-      bloodGroup,
+      bloodGroup: bloodGroup,
       donationDate,
       donationTime,
       requestMessage,
@@ -79,6 +84,18 @@ const AddRequest = () => {
               <input name="requester_email" type="email" className="input" value={user?.email} readOnly disabled />
               <label className="label">Recipient Name</label>
               <input name="recipient_name" type="text" className="input" placeholder="Karim" />
+              {/* Blood Group Selector */}
+              <label className="label">Blood Group</label>
+              <select value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} name="blood_group" defaultValue="" className="select">
+                <option value="" disabled>
+                  -- Select Blood Group --
+                </option>
+                {bloodGroups?.map((bloodGroup) => (
+                  <option value={bloodGroup?.id} key={bloodGroup?.id}>
+                    {bloodGroup?.type}
+                  </option>
+                ))}
+              </select>
               {/* District Selector */}
               <label className="label">Recipient District</label>
               <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" defaultValue="" className="select">
