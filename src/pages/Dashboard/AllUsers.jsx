@@ -8,7 +8,6 @@ const AllUsers = () => {
   const { user } = useContext(AuthContext);
 
   const [users, setUsers] = useState([]);
-  const [tasks, setTasks] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState([]);
 
   const fetchUsers = useCallback(() => {

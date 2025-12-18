@@ -8,6 +8,7 @@ import DashboardIcon from "./Icons/DashboardIcon";
 import { AuthContext } from "../providers/AuthProvider";
 import LogoutIcon from "./Icons/LogoutIcon";
 import DonationRequestsIcon from "./Icons/DonationRequestsIcon";
+import AllDonationRequestsIcon from "./Icons/AllDonationRequestsIcon";
 import ProfileIcon from "./Icons/ProfileIcon";
 
 const Sidebar = () => {
@@ -46,29 +47,37 @@ const Sidebar = () => {
           {/* List item */}
           {role == "Donor" && (
             <>
-            <li>
-              <NavLink to="/dashboard/my-donation-requests" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Donation Requests">
-                <DonationRequestsIcon></DonationRequestsIcon>
-                <span className="is-drawer-close:hidden">My Donation Requests</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Request">
-                <CreateIcon></CreateIcon>
-                <span className="is-drawer-close:hidden">Add Request</span>
-              </NavLink>
-            </li>
+              <li>
+                <NavLink to="/dashboard/my-donation-requests" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Donation Requests">
+                  <DonationRequestsIcon></DonationRequestsIcon>
+                  <span className="is-drawer-close:hidden">My Donation Requests</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/create-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add Request">
+                  <CreateIcon></CreateIcon>
+                  <span className="is-drawer-close:hidden">Add Request</span>
+                </NavLink>
+              </li>
             </>
           )}
 
           {/* List item */}
           {role == "Admin" && (
-            <li>
-              <NavLink to="/dashboard/all-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
-                <AllUsersIcon></AllUsersIcon>
-                <span className="is-drawer-close:hidden">All Users</span>
-              </NavLink>
-            </li>
+            <>
+              <li>
+                <NavLink to="/dashboard/all-users" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Users">
+                  <AllUsersIcon></AllUsersIcon>
+                  <span className="is-drawer-close:hidden">All Users</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/all-blood-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Donation Requests">
+                  <AllDonationRequestsIcon></AllDonationRequestsIcon>
+                  <span className="is-drawer-close:hidden">All Donation Requests</span>
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>

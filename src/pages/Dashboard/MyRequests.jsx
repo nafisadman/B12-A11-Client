@@ -9,7 +9,6 @@ const MyRequests = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [filterStatus, setFilterStatus] = useState("pending");
   const [selectedStatus, setSelectedStatus] = useState([]);
 
   const axiosSecure = useAxiosSecure();
@@ -19,7 +18,8 @@ const MyRequests = () => {
       setBloodGroups(res.data.bloodGroups);
     });
 
-    axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}&status=${filterStatus}`).then((res) => {
+    axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}`).then((res) => {
+      console.log("/my-donation-requests", res.data.result);
       setMyRequests(res.data.result);
       setTotalRequests(res.data.totalRequest);
     });
@@ -28,7 +28,7 @@ const MyRequests = () => {
   const numberOfPages = Math.ceil(totalRequests / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()].map((e) => e + 1);
 
-  console.log("currentPage", currentPage);
+  // console.log("currentPage for pagination", currentPage);
 
   const handlePrev = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -38,19 +38,24 @@ const MyRequests = () => {
     if (currentPage < pages.length) setCurrentPage(currentPage + 1);
   };
 
-  console.log(bloodGroups);
+  // console.log(bloodGroups);
 
   // Handle Checkbox Toggle
   const handleFilterChange = (status) => {
-    setSelectedStatus((prev) => {
-      if (prev.includes(status)) {
+    setSelectedStatus((prevSetSelectedStatus) => {
+      if (prevSetSelectedStatus.includes(status)) {
         // Remove if already selected
-        return prev.filter((s) => s !== status);
+        return prevSetSelectedStatus.filter((s) => s !== status);
       } else {
         // Add if not selected
-        return [...prev, status];
+        return [...prevSetSelectedStatus, status];
       }
     });
+  };
+
+  // Handle Reset
+  const handleReset = () => {
+    setSelectedStatus([]); // Clear all filters
   };
 
   return (
@@ -90,7 +95,7 @@ const MyRequests = () => {
             name="frameworks"
             aria-label="Cancelled"
           />
-          <input className="btn btn-square" type="reset" value="×" />
+          <input onClick={handleReset} className="btn btn-square" type="reset" value="×" />
         </form>
       </div>
       {/* Table */}
@@ -103,17 +108,22 @@ const MyRequests = () => {
               <th>Receipient Name</th>
               <th>Hospital</th>
               <th>Blood Group</th>
+              <th>Request Status</th>
             </tr>
           </thead>
           <tbody>
-            {myRequests.map((myRequest, index) => (
-              <tr>
-                <th>{currentPage * 10 + (index + 1) - 10}</th>
-                <td>{myRequest.recipientName}</td>
-                <td>{myRequest.hospitalName}</td>
-                <td>{bloodGroups.find((g) => g.id == myRequest.bloodGroup)?.type}</td>
-              </tr>
-            ))}
+            {myRequests.map(
+              (myRequest, index) =>
+                myRequest?.request_status?.includes(selectedStatus) && (
+                  <tr>
+                    <th>{currentPage * 10 + (index + 1) - 10}</th>
+                    <td>{myRequest.recipientName}</td>
+                    <td>{myRequest.hospitalName}</td>
+                    <td>{bloodGroups.find((g) => g.id == myRequest.bloodGroup)?.type}</td>
+                    <td>{myRequest?.request_status}</td>
+                  </tr>
+                )
+            )}
           </tbody>
         </table>
       </div>
