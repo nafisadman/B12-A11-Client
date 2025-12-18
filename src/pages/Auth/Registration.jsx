@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { use, useEffect, useState } from "react";
 import useTitle from "../../hooks/useTitle";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link, Navigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Registration = () => {
   useTitle("Registration");
+
+  const navigate = useNavigate();
 
   const { setUser, createUser, updateUser } = use(AuthContext);
 
@@ -36,7 +38,7 @@ const Registration = () => {
 
     const form = e.target;
 
-    const email = form.email.value;
+    const email =  form.email.value.toLowerCase();
     const name = form.name.value;
     const photo = form.photo.files[0];
     const password = form.password.value;
@@ -59,7 +61,6 @@ const Registration = () => {
       email,
       name,
       userPhotoUrl,
-      password,
       bloodGroup: bloodGroup,
       district: district,
       upazila: upazila,
@@ -71,12 +72,15 @@ const Registration = () => {
       createUser(email, password)
         .then((result) => {
           const user = result.user;
-          updateUser({ displayName: name, photoUrl: userPhotoUrl })
+          updateUser({ displayName: name, photoURL: userPhotoUrl })
             .then(() => {
-              setUser({ ...user, displayName: name, photoUrl: userPhotoUrl });
+              setUser({ ...user, displayName: name, photoURL: userPhotoUrl });
               axios
                 .post("http://localhost:5000/users", formData)
-                .then((res) => console.log(res.data))
+                .then((res) => {
+                  console.log(res.data);
+                  navigate("/");
+                })
                 .catch((error) => console.log(error));
             })
             .catch((error) => {
@@ -86,7 +90,7 @@ const Registration = () => {
             });
         })
         .catch((error) => {
-          alert(error.errorCode, error.errorMessage);
+          alert(error.message);
         });
     }
 

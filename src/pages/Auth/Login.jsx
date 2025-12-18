@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import GoogleIcon from "../../components/Icons/GoogleIcon";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const { signIn } = useContext(AuthContext);
   // Form
   const handleLogin = async (e) => {
@@ -16,9 +18,10 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         console.log("Signed In", result.user);
+        navigate("/");
       })
       .catch((error) => {
-        console.log(error.message);
+        alert(error.message);
       });
   };
 
@@ -39,7 +42,12 @@ const Login = () => {
               <label className="label">Password</label>
               <input name="password" type="password" className="input" placeholder="Password" />
               <div>
-                <p>Don't have an Account? <Link to='/auth/registration' className="link link-primary">Sign Up</Link></p>
+                <p>
+                  Don't have an Account?{" "}
+                  <Link to="/auth/registration" className="link link-primary">
+                    Sign Up
+                  </Link>
+                </p>
               </div>
               <button className="btn btn-neutral mt-4">Login</button>
             </form>

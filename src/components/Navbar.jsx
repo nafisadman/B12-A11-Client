@@ -46,8 +46,8 @@ const Navbar = () => {
             <NavLink to="/search">Search</NavLink>
           </li>
           <li>
-              <NavLink to="/requests">Requests</NavLink>
-            </li>
+            <NavLink to="/requests">Requests</NavLink>
+          </li>
           <li>
             <NavLink to="/donate">Donate</NavLink>
           </li>
@@ -59,16 +59,10 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                  <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
+                  <img src={user?.photoURL || "https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"} />
                 </div>
               </div>
               <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li>
-                  <a className="justify-between">
-                    Profile
-                    <span className="badge">New</span>
-                  </a>
-                </li>
                 <li>
                   <NavLink to="/dashboard">Dashboard</NavLink>
                 </li>

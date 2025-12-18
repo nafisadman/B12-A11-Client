@@ -8,6 +8,7 @@ import DashboardIcon from "./Icons/DashboardIcon";
 import { AuthContext } from "../providers/AuthProvider";
 import LogoutIcon from "./Icons/LogoutIcon";
 import DonationRequestsIcon from "./Icons/DonationRequestsIcon";
+import ProfileIcon from "./Icons/ProfileIcon";
 
 const Sidebar = () => {
   const { role } = useContext(AuthContext);
@@ -33,6 +34,12 @@ const Sidebar = () => {
             <NavLink to="/dashboard" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Dashboard">
               <DashboardIcon></DashboardIcon>
               <span className="is-drawer-close:hidden">Dashboard</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/profile" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
+              <ProfileIcon></ProfileIcon>
+              <span className="is-drawer-close:hidden">Profile</span>
             </NavLink>
           </li>
 

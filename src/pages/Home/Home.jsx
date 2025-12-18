@@ -18,7 +18,7 @@ const Home = () => {
             <p className="mb-5">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-1 justify-center">
               <Link to="/auth/registration">
                 <button className="btn btn-primary">Join as a donor</button>
               </Link>

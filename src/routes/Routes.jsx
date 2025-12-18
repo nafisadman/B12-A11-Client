@@ -14,6 +14,7 @@ import PaymentSuccess from "../pages/Home/PaymentSuccess";
 import PaymentCancelled from "../pages/Home/PaymentCancelled";
 import Search from "../pages/Home/Search";
 import Requests from "../pages/Home/Requests";
+import Profile from "../pages/Dashboard/Profile";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         Component: UserDashboard,
+      },
+      {
+        path: "/dashboard/profile",
+        Component: Profile,
       },
       // Donor Dashboard
       {
