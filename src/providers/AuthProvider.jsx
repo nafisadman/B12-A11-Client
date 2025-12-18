@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (!user) return;
     axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
-      console.log(res.data.role);
+      console.log('AuthProvider.jsx: ', res.data.role);
       setRole(res.data.role);
       setUserStatus(res.data.status);
       setRoleLoading(false);

@@ -7,7 +7,7 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const DashboardLayout = () => {
   const { role } = useContext(AuthContext);
-  console.log('User Role: ', role);
+  console.log('Dashboard Layout.jsx file -- User Role: ', role);
   return (
     <div>
       <div className="drawer lg:drawer-open">

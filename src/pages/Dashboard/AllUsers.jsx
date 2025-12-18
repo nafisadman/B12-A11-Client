@@ -26,9 +26,19 @@ const AllUsers = () => {
   console.log(users);
   console.log(selectedStatus);
 
+  // User status change ig. block users
   const handleStatusChange = (email, status) => {
     console.log("Button Clicked");
     axiosSecure.patch(`/update/user/status?email=${email}&status=${status}`).then((res) => {
+      console.log(res.data);
+      fetchUsers();
+    });
+  };
+
+  // User role change ig. make user to volunteer
+  const handleRoleChange = (email, role) => {
+    console.log("Make Volunteer Button Clicked");
+    axiosSecure.patch(`update/user/role?email=${email}&role=${role}`).then((res) => {
       console.log(res.data);
       fetchUsers();
     });
@@ -88,7 +98,7 @@ const AllUsers = () => {
               <th>Name</th>
               <th>Role</th>
               <th>User Status</th>
-              <th></th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -116,12 +126,28 @@ const AllUsers = () => {
                       </div>
                     </td>
                     <td>
-                      Zemlak, Daniel and Leannon
+                      {user?.role}
                       <br />
-                      <span className="badge badge-ghost badge-sm">{user?.role}</span>
                     </td>
                     <td>{user?.status}</td>
-                    <th>
+                    <th className="flex gap-1">
+                      {user?.role == "Donor" && (
+                        <>
+                          <button onClick={() => handleRoleChange(user?.email, "Volunteer")} className="btn btn-dash btn-xs">
+                            Make Volunteer
+                          </button>
+                          <button onClick={() => handleRoleChange(user?.email, "Admin")} className="btn btn-dash btn-xs">
+                            Make Admin
+                          </button>
+                        </>
+                      )}
+                      {user?.role == "Volunteer" && (
+                        <>
+                          <button onClick={() => handleRoleChange(user?.email, "Admin")} className="btn btn-dash btn-xs">
+                            Make Admin
+                          </button>
+                        </>
+                      )}
                       {user?.status == "active" ? (
                         <button onClick={() => handleStatusChange(user?.email, "blocked")} className="btn btn-outline btn-error btn-xs">
                           Block
