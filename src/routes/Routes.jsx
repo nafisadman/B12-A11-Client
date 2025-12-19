@@ -16,6 +16,7 @@ import Search from "../pages/Home/Search";
 import Requests from "../pages/Home/Requests";
 import Profile from "../pages/Dashboard/Profile";
 import AllBloodDonationReq from "../pages/Dashboard/AllBloodDonationReq";
+import RequestsDetails from "../pages/Home/RequestsDetails";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/requests",
         Component: Requests,
+      },
+      {
+        path: "/requests/:id",
+        element: <RequestsDetails></RequestsDetails>,
       },
       {
         path: "/donate",

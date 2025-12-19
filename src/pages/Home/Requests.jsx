@@ -64,7 +64,9 @@ const Requests = () => {
               </p>
               <p>{bloodGroups.find((g) => g.id == pendingRequest?.bloodGroup)?.type}</p>
               <div className="card-actions justify-end">
-                <Link className="btn btn-primary">View</Link>
+                <Link to={`/requests/${pendingRequest._id}`} className="btn btn-primary">
+                  View
+                </Link>
               </div>
             </div>
           </div>
