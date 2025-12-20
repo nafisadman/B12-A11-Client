@@ -4,6 +4,8 @@ import axios from "axios";
 
 const MyRequests = () => {
   const [bloodGroups, setBloodGroups] = useState([]);
+  const [upazilas, setUpazilas] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const [totalRequests, setTotalRequests] = useState(0);
   const [myRequests, setMyRequests] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -16,6 +18,14 @@ const MyRequests = () => {
   useEffect(() => {
     axios.get("/blood-groups.json").then((res) => {
       setBloodGroups(res.data.bloodGroups);
+    });
+
+    axios.get("/upazilas.json").then((res) => {
+      setUpazilas(res.data.upazilas);
+    });
+
+    axios.get("/districts.json").then((res) => {
+      setDistricts(res.data.districts);
     });
 
     axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}`).then((res) => {
@@ -60,7 +70,7 @@ const MyRequests = () => {
 
   return (
     <div>
-      {/* Header */}
+      {/* Header for Filtering */}
       <div>
         <form className="flex flex-wrap gap-1">
           <input
@@ -106,9 +116,12 @@ const MyRequests = () => {
             <tr>
               <th></th>
               <th>Receipient Name</th>
+              <th>Receipient Location</th>
+              <th>Time & Date</th>
               <th>Hospital</th>
               <th>Blood Group</th>
-              <th>Request Status</th>
+              <th>Donation Status</th>
+              <th>Donor Info</th>
             </tr>
           </thead>
           <tbody>
@@ -116,10 +129,16 @@ const MyRequests = () => {
               (myRequest, index) =>
                 myRequest?.request_status?.includes(selectedStatus) && (
                   <tr>
-                    <th>{currentPage * 10 + (index + 1) - 10}</th>
+                    <th>{index + 1}</th>
                     <td>{myRequest.recipientName}</td>
+                    <td>
+                      {upazilas.find((u) => u.id == myRequest?.upazila)?.name}, {districts.find((u) => u.id == myRequest?.district)?.name}
+                    </td>
+                    <td>
+                      {myRequest.donationTime}, {myRequest.donationDate}
+                    </td>
                     <td>{myRequest.hospitalName}</td>
-                    <td>{bloodGroups.find((g) => g.id == myRequest.bloodGroup)?.type}</td>
+                    <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
                     <td>{myRequest?.request_status}</td>
                   </tr>
                 )
