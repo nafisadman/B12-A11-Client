@@ -30,10 +30,6 @@ const AdminStat = () => {
       setBloodDonationRequest(res.data.length);
     });
 
-    // axiosSecure.get("/my-donation-requests-recent").then((res) => {
-    //   console.log("/my-donation-requests-recent", res.data);
-    //   setDonorRecentRequests(res.data);
-    // });
   }, [axiosSecure]);
 
   useEffect(() => fetchUsers(), [fetchUsers]);
