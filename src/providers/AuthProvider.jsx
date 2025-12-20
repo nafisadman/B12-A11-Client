@@ -10,6 +10,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [roleLoading, setRoleLoading] = useState(true);
+  const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState("");
@@ -49,6 +50,7 @@ const AuthProvider = ({ children }) => {
     if (!user) return;
     axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
       console.log('AuthProvider.jsx: ', res.data.role);
+      setName(res.data.name);
       setRole(res.data.role);
       setUserStatus(res.data.status);
       setRoleLoading(false);
@@ -59,6 +61,7 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     loading,
+    name,
     role,
     createUser,
     updateUser,
