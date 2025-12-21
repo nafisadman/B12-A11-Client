@@ -28,12 +28,12 @@ const MyRequests = () => {
       setDistricts(res.data.districts);
     });
 
-    axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}`).then((res) => {
+    axiosSecure.get(`/my-donation-requests?page=${currentPage - 1}&size=${itemsPerPage}&status=${selectedStatus}`).then((res) => {
       console.log("/my-donation-requests", res.data.result);
       setMyRequests(res.data.result);
       setTotalRequests(res.data.totalRequest);
     });
-  }, [axiosSecure, currentPage, itemsPerPage]);
+  }, [axiosSecure, currentPage, itemsPerPage, selectedStatus]);
 
   const numberOfPages = Math.ceil(totalRequests / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()].map((e) => e + 1);
@@ -82,8 +82,8 @@ const MyRequests = () => {
             aria-label="Pending"
           />
           <input
-            checked={selectedStatus.includes("in_progress")}
-            onChange={() => handleFilterChange("in_progress")}
+            checked={selectedStatus.includes("inprogress")}
+            onChange={() => handleFilterChange("inprogress")}
             className="btn"
             type="checkbox"
             name="frameworks"
@@ -126,33 +126,30 @@ const MyRequests = () => {
             </tr>
           </thead>
           <tbody>
-            {myRequests.map(
-              (myRequest, index) =>
-                myRequest?.request_status?.includes(selectedStatus) && (
-                  <tr>
-                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                    <td>{myRequest.recipientName}</td>
-                    <td>
-                      {upazilas.find((u) => u.id == myRequest?.upazila)?.name}, {districts.find((u) => u.id == myRequest?.district)?.name}
-                    </td>
-                    <td>
-                      {myRequest.donationTime}, {myRequest.donationDate}
-                    </td>
-                    <td>{myRequest.hospitalName}</td>
-                    <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
-                    <td>{myRequest?.request_status}</td>
-                    <td>Donor Info</td>
-                    <td className="flex">
-                      {myRequest?.request_status == "inprogress" && (
-                        <>
-                          <button className="btn btn-xs">Done</button>
-                          <button className="btn btn-xs">Cancel</button>
-                        </>
-                      )}
-                    </td>
-                  </tr>
-                )
-            )}
+            {myRequests.map((myRequest, index) => (
+              <tr>
+                <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                <td>{myRequest.recipientName}</td>
+                <td>
+                  {upazilas.find((u) => u.id == myRequest?.upazila)?.name}, {districts.find((u) => u.id == myRequest?.district)?.name}
+                </td>
+                <td>
+                  {myRequest.donationTime}, {myRequest.donationDate}
+                </td>
+                <td>{myRequest.hospitalName}</td>
+                <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
+                <td>{myRequest?.request_status}</td>
+                <td>Donor Info</td>
+                <td className="flex">
+                  {myRequest?.request_status == "inprogress" && (
+                    <>
+                      <button className="btn btn-xs">Done</button>
+                      <button className="btn btn-xs">Cancel</button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
