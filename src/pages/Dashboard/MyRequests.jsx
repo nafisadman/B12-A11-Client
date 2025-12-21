@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link, Links } from "react-router";
 
 const MyRequests = () => {
   const [bloodGroups, setBloodGroups] = useState([]);
@@ -53,19 +53,28 @@ const MyRequests = () => {
 
   // Handle Status Button
   const handleStatusUpdate = (id, newStatus) => {
-  axiosSecure.patch(`/donation-request-status/${id}`, { status: newStatus })
-    .then((res) => {
+    axiosSecure.patch(`/donation-request-status/${id}`, { status: newStatus }).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
-        // Update the specific item in the local state to reflect change immediately
-        const updatedRequests = myRequests.map((request) =>
-          request._id === id ? { ...request, request_status: newStatus } : request
-        );
+        const updatedRequests = myRequests.map((request) => (request._id === id ? { ...request, request_status: newStatus } : request));
         setMyRequests(updatedRequests);
-        // Optional: Show a success toast here
       }
     });
-};
+  };
+
+  // Handle Delete
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this donation request?");
+
+    if (!confirmDelete) return;
+
+    axiosSecure
+      .delete(`/requests/${id}`)
+      .then(() => {
+        setMyRequests((prev) => prev.filter((item) => item._id !== id));
+      })
+      .catch(console.error);
+  };
 
   // Handle Checkbox Toggle
   const handleFilterChange = (status) => {
@@ -135,7 +144,7 @@ const MyRequests = () => {
               <th>Receipient Name</th>
               <th>Receipient Location</th>
               <th>Time & Date</th>
-              <th>Hospital</th>
+              {/* <th>Hospital</th> */}
               <th>Blood Group</th>
               <th>Donation Status</th>
               <th>Donor Info</th>
@@ -153,23 +162,37 @@ const MyRequests = () => {
                 <td>
                   {myRequest.donationTime}, {myRequest.donationDate}
                 </td>
-                <td>{myRequest.hospitalName}</td>
+                {/* <td>{myRequest.hospitalName}</td> */}
                 <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
                 <td>{myRequest?.request_status}</td>
-                <td>Donor Info</td>
-                <td className="flex gap-2">
+                <td>
                   {myRequest?.request_status === "inprogress" ? (
                     <>
-                      <button onClick={() => handleStatusUpdate(myRequest._id, "done")} className="btn btn-xs btn-success text-white">
+                      {myRequest?.donorName}
+                      <br />
+                      {myRequest?.donorEmail}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </td>
+                <td className="flex">
+                  <Link to={`/dashboard/edit-donation-request/${myRequest._id}`} className="btn btn-xs">
+                    Edit
+                  </Link>
+                  <button className="btn btn-xs" onClick={() => handleDelete(myRequest._id)}>
+                    Delete
+                  </button>
+                  <button className="btn btn-xs">View</button>
+                  {myRequest?.request_status === "inprogress" && (
+                    <>
+                      <button onClick={() => handleStatusUpdate(myRequest._id, "done")} className="btn btn-xs">
                         Done
                       </button>
-                      <button onClick={() => handleStatusUpdate(myRequest._id, "canceled")} className="btn btn-xs btn-error text-white">
+                      <button onClick={() => handleStatusUpdate(myRequest._id, "canceled")} className="btn btn-xs">
                         Cancel
                       </button>
                     </>
-                  ) : (
-                    // Optional: Show the current status if buttons are hidden
-                    <span className="badge badge-ghost badge-sm">{myRequest.request_status}</span>
                   )}
                 </td>
               </tr>
