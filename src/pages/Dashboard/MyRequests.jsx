@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
+import { Link } from "react-router";
 
 const MyRequests = () => {
   const [bloodGroups, setBloodGroups] = useState([]);
@@ -49,6 +50,22 @@ const MyRequests = () => {
   };
 
   // console.log(bloodGroups);
+
+  // Handle Status Button
+  const handleStatusUpdate = (id, newStatus) => {
+  axiosSecure.patch(`/donation-request-status/${id}`, { status: newStatus })
+    .then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        // Update the specific item in the local state to reflect change immediately
+        const updatedRequests = myRequests.map((request) =>
+          request._id === id ? { ...request, request_status: newStatus } : request
+        );
+        setMyRequests(updatedRequests);
+        // Optional: Show a success toast here
+      }
+    });
+};
 
   // Handle Checkbox Toggle
   const handleFilterChange = (status) => {
@@ -140,12 +157,19 @@ const MyRequests = () => {
                 <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
                 <td>{myRequest?.request_status}</td>
                 <td>Donor Info</td>
-                <td className="flex">
-                  {myRequest?.request_status == "inprogress" && (
+                <td className="flex gap-2">
+                  {myRequest?.request_status === "inprogress" ? (
                     <>
-                      <button className="btn btn-xs">Done</button>
-                      <button className="btn btn-xs">Cancel</button>
+                      <button onClick={() => handleStatusUpdate(myRequest._id, "done")} className="btn btn-xs btn-success text-white">
+                        Done
+                      </button>
+                      <button onClick={() => handleStatusUpdate(myRequest._id, "canceled")} className="btn btn-xs btn-error text-white">
+                        Cancel
+                      </button>
                     </>
+                  ) : (
+                    // Optional: Show the current status if buttons are hidden
+                    <span className="badge badge-ghost badge-sm">{myRequest.request_status}</span>
                   )}
                 </td>
               </tr>
