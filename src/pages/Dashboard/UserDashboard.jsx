@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import React, { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Welcome from "../../components/Dashboard/Welcome";
 import AdminStat from "../../components/Dashboard/AdminStat";

@@ -122,6 +122,7 @@ const MyRequests = () => {
               <th>Blood Group</th>
               <th>Donation Status</th>
               <th>Donor Info</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +130,7 @@ const MyRequests = () => {
               (myRequest, index) =>
                 myRequest?.request_status?.includes(selectedStatus) && (
                   <tr>
-                    <th>{index + 1}</th>
+                    <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
                     <td>{myRequest.recipientName}</td>
                     <td>
                       {upazilas.find((u) => u.id == myRequest?.upazila)?.name}, {districts.find((u) => u.id == myRequest?.district)?.name}
@@ -140,6 +141,15 @@ const MyRequests = () => {
                     <td>{myRequest.hospitalName}</td>
                     <td>{bloodGroups.find((g) => g.id == myRequest?.bloodGroup)?.type}</td>
                     <td>{myRequest?.request_status}</td>
+                    <td>Donor Info</td>
+                    <td className="flex">
+                      {myRequest?.request_status == "inprogress" && (
+                        <>
+                          <button className="btn btn-xs">Done</button>
+                          <button className="btn btn-xs">Cancel</button>
+                        </>
+                      )}
+                    </td>
                   </tr>
                 )
             )}
