@@ -79,6 +79,18 @@ const Sidebar = () => {
               </li>
             </>
           )}
+
+          {/* List item */}
+          {role == "Volunteer" && (
+            <>
+              <li>
+                <NavLink to="/dashboard/all-blood-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Donation Requests">
+                  <AllDonationRequestsIcon></AllDonationRequestsIcon>
+                  <span className="is-drawer-close:hidden">All Donation Requests</span>
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

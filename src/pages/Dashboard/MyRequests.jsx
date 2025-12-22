@@ -183,7 +183,7 @@ const MyRequests = () => {
                   <button className="btn btn-xs" onClick={() => handleDelete(myRequest._id)}>
                     Delete
                   </button>
-                  <button className="btn btn-xs">View</button>
+                  <Link to={`/requests/${myRequest._id}`} className="btn btn-xs">View</Link>
                   {myRequest?.request_status === "inprogress" && (
                     <>
                       <button onClick={() => handleStatusUpdate(myRequest._id, "done")} className="btn btn-xs">
