@@ -15,13 +15,12 @@ const UserDashboard = () => {
       {/* Donor */}
       {role == "Donor" && <RecentRequest></RecentRequest>}
 
-      {/* Admin */}
-      {role == "Admin" ||
-        (role == "Volunteer" && (
-          <div>
-            <AdminStat></AdminStat>
-          </div>
-        ))}
+      {/* Admin & Volunteer */}
+      {(role === "Admin" || role === "Volunteer") && (
+        <div>
+          <AdminStat></AdminStat>
+        </div>
+      )}
     </div>
   );
 };
