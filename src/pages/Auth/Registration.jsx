@@ -76,7 +76,7 @@ const Registration = () => {
             .then(() => {
               setUser({ ...user, displayName: name, photoURL: userPhotoUrl });
               axios
-                .post("http://localhost:5000/users", formData)
+                .post("https://b12-a11-server-tan.vercel.app/users", formData)
                 .then((res) => {
                   console.log(res.data);
                   navigate("/");

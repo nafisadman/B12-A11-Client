@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const getRole = async () => {
-    await axios.get(`http://localhost:5000/users/role/${currentUser.email}`).then((res) => {
+    await axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${currentUser.email}`).then((res) => {
       setRole(res.data.role);
     });
   };
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`http://localhost:5000/users/role/${user.email}`).then((res) => {
+    axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${user.email}`).then((res) => {
       console.log('AuthProvider.jsx: ', res.data.role);
       setName(res.data.name);
       setRole(res.data.role);

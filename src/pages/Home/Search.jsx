@@ -33,6 +33,7 @@ const Search = () => {
 
     axiosInstance.get(`/search-request?blood=${bloodGroup}&district=${district}&upazila=${upazila}`).then((res) => {
       console.log("Browser Output", res.data);
+      console.log(res.data);
       setSearchResults(res.data);
     });
   };
