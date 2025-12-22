@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState("");
 
-  // Form
+  // Form Functions
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -32,29 +32,34 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const getRole = async () => {
-    await axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${currentUser.email}`).then((res) => {
-      setRole(res.data.role);
-    });
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      
+      if (!currentUser) {
+        setRoleLoading(false); 
+      }
+      
       setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
   useEffect(() => {
-    if (!user) return;
-    axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${user.email}`).then((res) => {
-      console.log('AuthProvider.jsx: ', res.data.role);
-      setName(res.data.name);
-      setRole(res.data.role);
-      setUserStatus(res.data.status);
-      setRoleLoading(false);
-    });
+    if (user) {
+      setRoleLoading(true);
+      
+      axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${user.email}`)
+        .then((res) => {
+          console.log('AuthProvider.jsx: ', res.data.role);
+          setName(res.data.name);
+          setRole(res.data.role);
+          setUserStatus(res.data.status);
+        })
+        .finally(() => {
+          setRoleLoading(false); 
+        });
+    }
   }, [user]);
 
   const authData = {
@@ -70,6 +75,7 @@ const AuthProvider = ({ children }) => {
     roleLoading,
     userStatus,
   };
+  
   return <AuthContext value={authData}>{children}</AuthContext>;
 };
 
