@@ -1,8 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../providers/AuthProvider";
+import useTitle from "../../hooks/useTitle";
 
 const AllUsers = () => {
+  useTitle("All Users");
   const axiosSecure = useAxiosSecure();
 
   const { user } = useContext(AuthContext);
@@ -63,6 +65,7 @@ const AllUsers = () => {
 
   return (
     <div>
+      <h1 className="text-2xl mb-4">All Users</h1>
       {/* Filter */}
       <form className="flex flex-wrap gap-1">
         <input
@@ -89,11 +92,11 @@ const AllUsers = () => {
           {/* Table Header */}
           <thead>
             <tr>
-              <th>
+              {/* <th>
                 <label>
                   <input type="checkbox" className="checkbox" />
                 </label>
-              </th>
+              </th> */}
               <th>Name</th>
               <th>Role</th>
               <th>User Status</th>
@@ -106,11 +109,11 @@ const AllUsers = () => {
               (user) =>
                 user?.status?.includes(selectedStatus) && (
                   <tr>
-                    <th>
+                    {/* <th>
                       <label>
                         <input type="checkbox" className="checkbox" />
                       </label>
-                    </th>
+                    </th> */}
                     <td>
                       <div className="flex items-center gap-3">
                         <div className="avatar">

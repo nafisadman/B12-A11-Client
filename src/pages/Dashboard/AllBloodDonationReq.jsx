@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import useTitle from "../../hooks/useTitle";
 
 const AllBloodDonationReq = () => {
+  useTitle("All Blood Donation Requests");
+  
   const [bloodGroups, setBloodGroups] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -100,6 +103,7 @@ const AllBloodDonationReq = () => {
   };
   return (
     <div>
+      <h1 className="text-2xl mb-4">All Blood Donation Requests</h1>
       {/* Header for Filtering */}
       <div>
         <form className="flex flex-wrap gap-1">
@@ -180,7 +184,8 @@ const AllBloodDonationReq = () => {
                     ""
                   )}
                 </td>
-                {currentUserRole == "Admin" && (
+                <td className="flex gap-1">
+                  {currentUserRole == "Admin" && (
                   <>
                     <Link to={`/dashboard/edit-donation-request/${myRequest._id}`} className="btn btn-xs">
                       Edit
@@ -190,7 +195,6 @@ const AllBloodDonationReq = () => {
                     </button>
                   </>
                 )}
-                <td className="flex">
                   <Link to={`/requests/${myRequest._id}`} className="btn btn-xs">
                     View
                   </Link>

@@ -2,5 +2,5 @@
 @plugin "daisyui";
 
 @plugin "daisyui" {
-  themes: light --default, dark, emerald, cupcake;
+  themes: light --default, caramellatte, emerald, cupcake;
 }

@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import HomeIcon from "../components/Icons/HomeIcon";
-import SettingsIcon from "../components/Icons/SettingsIcon";
 import { Link, NavLink } from "react-router";
+import SettingsIcon from "../components/Icons/SettingsIcon";
+
 import CreateIcon from "./Icons/CreateIcon";
 import AllUsersIcon from "./Icons/AllUsersIcon";
 import DashboardIcon from "./Icons/DashboardIcon";
@@ -22,12 +23,19 @@ const Sidebar = () => {
         <ul className="menu w-full grow">
           {/* List item */}
           <li>
-            <NavLink to="/" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
-              <HomeIcon></HomeIcon>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-2 p-2 rounded ${
+                  isActive ? "bg-primary text-white" : "hover:bg-base-300"
+                }`
+              }
+              data-tip="Homepage"
+            >
+              <HomeIcon />
               <span className="is-drawer-close:hidden">Homepage</span>
             </NavLink>
           </li>
-
           <div className="divider"></div>
 
           {/* List item */}
@@ -72,7 +80,11 @@ const Sidebar = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/all-blood-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Donation Requests">
+                <NavLink
+                  to="/dashboard/all-blood-donation-request"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="All Donation Requests"
+                >
                   <AllDonationRequestsIcon></AllDonationRequestsIcon>
                   <span className="is-drawer-close:hidden">All Donation Requests</span>
                 </NavLink>
@@ -84,7 +96,11 @@ const Sidebar = () => {
           {role == "Volunteer" && (
             <>
               <li>
-                <NavLink to="/dashboard/all-blood-donation-request" className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="All Donation Requests">
+                <NavLink
+                  to="/dashboard/all-blood-donation-request"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="All Donation Requests"
+                >
                   <AllDonationRequestsIcon></AllDonationRequestsIcon>
                   <span className="is-drawer-close:hidden">All Donation Requests</span>
                 </NavLink>

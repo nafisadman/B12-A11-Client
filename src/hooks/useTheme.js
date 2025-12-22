@@ -15,7 +15,7 @@ const useTheme = () => {
     }
 
     if (role === "Admin") {
-      html.setAttribute("data-theme", "dark");
+      html.setAttribute("data-theme", "caramellatte");
     } else if (role === "Volunteer") {
       html.setAttribute("data-theme", "emerald");
     } else {

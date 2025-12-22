@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import useTitle from "../../hooks/useTitle";
 
 const Home = () => {
-  useTitle("Homepage");
+  useTitle("LifeLine");
   return (
     <div>
       {/* Hero with overlay image */}
@@ -32,8 +32,8 @@ const Home = () => {
         </div>
       </div>
       {/* Homepage Statistics */}
-      <div className="flex justify-center py-9 bg-neutral">
-        <div className="stats stats-vertical lg:stats-horizontal shadow bg-white">
+      <div className="flex justify-center py-9">
+        <div className="stats stats-vertical lg:stats-horizontal shadow">
           <div className="stat">
             <div className="stat-value text-center">12,050</div>
             <div className="stat-desc text-center">Happy Donors</div>

@@ -6,7 +6,7 @@ import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Profile = () => {
-  useTitle("Update");
+  useTitle("My Profile");
 
   const axiosSecure = useAxiosSecure();
 
@@ -105,81 +105,84 @@ const Profile = () => {
     setIsEditing(false);
   };
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Update Profile!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.
-          </p>
-          <div className="avatar">
-            <div className="w-24 rounded">
-              <img src={currentUser.userPhotoUrl || "https://img.daisyui.com/images/profile/demo/batperson@192.webp"} alt="Profile" />
+    <div>
+      <h1 className="text-2xl mb-4">My Profile</h1>
+      <div className="hero bg-base-200 min-h-screen">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+          <div className="text-center lg:text-left">
+            <h1 className="text-5xl font-bold">Update Profile!</h1>
+            <p className="py-6">
+              
+            </p>
+            <div className="avatar">
+              <div className="w-24 rounded">
+                <img src={currentUser.userPhotoUrl || "https://img.daisyui.com/images/profile/demo/batperson@192.webp"} alt="Profile" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <div className="card-body">
-            {
-              !isEditing && <button
-              onClick={(e) => {
-                e.preventDefault();
-                setIsEditing(true);
-              }}
-              className="btn btn-neutral mt-4"
-            >
-              Edit
-            </button>
-            }
-            
-            <form onSubmit={handleUpdate} className="fieldset">
-              {/* Personal Information */}
-              <label className="label">Email</label>
-              <input defaultValue={currentUser.email} name="email" type="email" className="input" readOnly disabled required />
-              <label className="label">Name</label>
-              <input defaultValue={currentUser.name} name="name" type="text" className="input" placeholder="Rahim" required disabled={!isEditing} />
-              <label className="label">Photo</label>
-              <input name="photo" type="file" className="file-input" placeholder="Photo" disabled={!isEditing} />
-              {/* Blood Group Selector */}
-              <label className="label">Blood Group</label>
-              <select value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} name="blood_group" className="select" disabled={!isEditing}>
-                <option value="" disabled>
-                  -- Select Blood Group --
-                </option>
-                {bloodGroups?.map((bloodGroup) => (
-                  <option value={bloodGroup?.id} key={bloodGroup?.id}>
-                    {bloodGroup?.type}
+          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+            <div className="card-body">
+              {!isEditing && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsEditing(true);
+                  }}
+                  className="btn btn-neutral mt-4"
+                >
+                  Edit
+                </button>
+              )}
+
+              <form onSubmit={handleUpdate} className="fieldset">
+                {/* Personal Information */}
+                <label className="label">Email</label>
+                <input defaultValue={currentUser.email} name="email" type="email" className="input" readOnly disabled required />
+                <label className="label">Name</label>
+                <input defaultValue={currentUser.name} name="name" type="text" className="input" placeholder="Rahim" required disabled={!isEditing} />
+                <label className="label">Photo</label>
+                <input name="photo" type="file" className="file-input" placeholder="Photo" disabled={!isEditing} />
+                {/* Blood Group Selector */}
+                <label className="label">Blood Group</label>
+                <select value={bloodGroup} onChange={(e) => setBloodGroup(e.target.value)} name="blood_group" className="select" disabled={!isEditing}>
+                  <option value="" disabled>
+                    -- Select Blood Group --
                   </option>
-                ))}
-              </select>
-              {/* District Selector */}
-              <label className="label">District</label>
-              <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" className="select" disabled={!isEditing}>
-                <option value="" disabled>
-                  -- Select District --
-                </option>
-                {districts.map((district) => (
-                  <option value={district?.id} key={district?.id}>
-                    {district?.name}
-                  </option>
-                ))}
-              </select>
-              {/* Upazila Selector */}
-              <label className="label">Upazila</label>
-              <select value={upazila} onChange={(e) => setUpazila(e.target.value)} name="upazila" id="" className="select" disabled={!isEditing}>
-                <option value="" disabled>
-                  -- Select Upazila --
-                </option>
-                {upazilas
-                  .filter((upazila) => upazila?.district_id == district)
-                  .map((upazila) => (
-                    <option value={upazila?.id} key={upazila?.id}>
-                      {upazila?.name}
+                  {bloodGroups?.map((bloodGroup) => (
+                    <option value={bloodGroup?.id} key={bloodGroup?.id}>
+                      {bloodGroup?.type}
                     </option>
                   ))}
-              </select>
-              {isEditing && <button className="btn btn-neutral mt-4">Save</button>}
-            </form>
+                </select>
+                {/* District Selector */}
+                <label className="label">District</label>
+                <select value={district} onChange={(e) => setDistrict(e.target.value)} name="district" id="" className="select" disabled={!isEditing}>
+                  <option value="" disabled>
+                    -- Select District --
+                  </option>
+                  {districts.map((district) => (
+                    <option value={district?.id} key={district?.id}>
+                      {district?.name}
+                    </option>
+                  ))}
+                </select>
+                {/* Upazila Selector */}
+                <label className="label">Upazila</label>
+                <select value={upazila} onChange={(e) => setUpazila(e.target.value)} name="upazila" id="" className="select" disabled={!isEditing}>
+                  <option value="" disabled>
+                    -- Select Upazila --
+                  </option>
+                  {upazilas
+                    .filter((upazila) => upazila?.district_id == district)
+                    .map((upazila) => (
+                      <option value={upazila?.id} key={upazila?.id}>
+                        {upazila?.name}
+                      </option>
+                    ))}
+                </select>
+                {isEditing && <button className="btn btn-neutral mt-4">Save</button>}
+              </form>
+            </div>
           </div>
         </div>
       </div>
