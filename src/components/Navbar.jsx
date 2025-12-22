@@ -2,6 +2,7 @@ import React, { use } from "react";
 import DropdownIcon from "./Icons/DropdownIcon";
 import { AuthContext } from "../providers/AuthProvider";
 import { Link, NavLink } from "react-router";
+import { FaHeartPulse } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
@@ -34,7 +35,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-xl">
-          daisyUI
+          <FaHeartPulse /> LifeLine
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -76,7 +77,7 @@ const Navbar = () => {
             </div>
           </>
         ) : (
-          <Link to={`/auth/login`} className="btn">
+          <Link to={`/auth/login`} className="btn btn-neutral">
             Login
           </Link>
         )}
