@@ -74,11 +74,11 @@ const Registration = () => {
           const user = result.user;
           updateUser({ displayName: name, photoURL: userPhotoUrl })
             .then(() => {
-              setUser({ ...user, displayName: name, photoURL: userPhotoUrl });
               axios
                 .post("https://b12-a11-server-tan.vercel.app/users", formData)
                 .then((res) => {
                   console.log(res.data);
+                  setUser({ ...user, displayName: name, photoURL: userPhotoUrl });
                   navigate("/");
                 })
                 .catch((error) => console.log(error));
