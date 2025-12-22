@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
-
 import { AuthContext } from "../providers/AuthProvider";
 
 const useTheme = () => {
-  const { role } = useContext(AuthContext);
+  const { role, loading, roleLoading, user } = useContext(AuthContext);
 
   useEffect(() => {
+    if (loading || (user && roleLoading)) return;
+
     const html = document.querySelector("html");
 
     if (!role) {
       html.setAttribute("data-theme", "light");
-
       return;
     }
 
@@ -21,7 +21,8 @@ const useTheme = () => {
     } else {
       html.setAttribute("data-theme", "cupcake");
     }
-  }, [role]); 
+
+  }, [role, loading, roleLoading, user]);
 };
 
 export default useTheme;
