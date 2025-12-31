@@ -5,7 +5,9 @@
 ---
 
 ## 📸 Screenshot
-*(A clean UI featuring a hero section with blood donation calls-to-action and a statistics counter)*
+<p align="center">
+  <img src="https://i.ibb.co/6RjDPmFf/image-fotor-20251231231024.jpg" alt="LifeLine Screenshot" />
+</p>
 
 ---
 
@@ -73,3 +75,41 @@
   "react-hot-toast": "^2.5.0",
   "daisyui": "^5.0.0"
 }
+
+## ⚙️ How to Run Locally
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/username/lifeline-client.git
+cd lifeline-client
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Setup
+Create a `.env.local` file in the root directory and add your Firebase and ImgBB keys:
+```env
+VITE_apiKey=your_api_key
+VITE_authDomain=your_auth_domain
+VITE_projectId=your_project_id
+VITE_storageBucket=your_storage_bucket
+VITE_messagingSenderId=your_sender_id
+VITE_appId=your_app_id
+VITE_IMGBB_KEY=your_imgbb_api_key
+```
+
+### 4. Start the Development Server
+```bash
+npm run dev
+```
+
+### 5. Access the App
+Open `http://localhost:5173` in your browser.
+
+## 🔗 Relevant Resources
+- **Server Repository:** [LifeLine Server](https://github.com/username/lifeline-server)
+- **API Documentation:** [Vercel Deployment](https://your-api-url.vercel.app)
+- **Firebase Console:** [Firebase Project](https://console.firebase.google.com)
