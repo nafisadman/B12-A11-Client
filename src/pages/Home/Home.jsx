@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import useTitle from "../../hooks/useTitle";
+import { motion } from "framer-motion";
 
 const Home = () => {
   useTitle("LifeLine");
@@ -8,7 +9,7 @@ const Home = () => {
     <div>
       {/* Hero with overlay image */}
       <div
-        className="hero min-h-screen"
+        className="hero min-h-[60vh]"
         style={{
           backgroundImage: "url(https://images.unsplash.com/photo-1615461066841-6116e61058f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)",
         }}
@@ -22,10 +23,10 @@ const Home = () => {
             <p className="mb-5">Your blood is precious: It gives life to another. Join our community of heroes and make a difference.</p>
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <Link to="/auth/registration">
-                <button className="btn btn-neutral">Join as a donor</button>
+                <motion.button className="btn btn-neutral" whileHover={{ scale: 1.05 }}>Join as a donor</motion.button>
               </Link>
               <Link to="/search">
-                <button className="btn btn-neutral btn-outline">Search Donors</button>
+                <motion.button className="btn btn-neutral btn-outline" whileHover={{ scale: 1.05 }}>Search Donors</motion.button>
               </Link>
             </div>
           </div>
