@@ -6,10 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 const RequestsDetails = () => {
   const { id } = useParams();
-
   const { user } = useContext(AuthContext);
-  console.log(user);
-
   const axiosSecure = useAxiosSecure();
 
   const [request, setRequest] = useState();
@@ -31,23 +28,27 @@ const RequestsDetails = () => {
       setDistricts(res.data.districts);
     });
 
-    axiosSecure.get(`/requests/${id}`).then((res) => {
-      console.log(res);
-      setRequest(res.data);
-    });
-  }, [axiosSecure, id]);
-
-  console.log("request", request);
+    axios.get(`https://b12-a11-server-tan.vercel.app/requests/${id}`)
+      .then((res) => {
+        console.log(res);
+        setRequest(res.data);
+      })
+      .catch(err => console.error("Failed to fetch details", err));
+      
+  }, [id]);
 
   const handleConfirmDonation = async (e) => {
     e.preventDefault();
-
     console.log("Confirm Button");
 
-    axiosSecure.patch(`/update/user/request-status?_id=${request?._id}&request_status=${status}&donor_name=${user?.displayName}&donor_email=${user?.email}`).then((res) => {
-      alert(status, "Updated successfully");
-      console.log(res.data);
-    });
+    axiosSecure.patch(`/update/user/request-status?_id=${request?._id}&request_status=${status}&donor_name=${user?.displayName}&donor_email=${user?.email}`)
+      .then((res) => {
+        alert("Donation status updated successfully");
+        console.log(res.data);
+        
+        setRequest(prev => ({ ...prev, request_status: status }));
+        document.getElementById("my_modal_1").close();
+      });
   };
 
   return (
@@ -57,7 +58,6 @@ const RequestsDetails = () => {
           <div>
             <h1 className="text-5xl font-bold">Request Details</h1>
             <div className="py-6">
-              {/* <p>Requester Name: {request?._id}</p> */}
               <p>Requester Name: {request?.recipientName}</p>
               <p>Hospital Name: {request?.hospitalName}</p>
               <p>Full Address Line: {request?.fullAdressLine}</p>
@@ -69,20 +69,23 @@ const RequestsDetails = () => {
               <p>Request Message: {request?.requestMessage}</p>
               <p>Requester Email: {request?.requesterEmail}</p>
             </div>
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
-            {request?.request_status=='pending' ? (
+
+            {user && (
               <>
-                <button className="btn btn-primary" onClick={() => document.getElementById("my_modal_1").showModal()}>
-                  Donate
-                </button>
-              </> ):(
-              <>
-                <button className="btn btn-primary" disabled onClick={() => document.getElementById("my_modal_1").showModal()}>
-                  In Progress
-                </button>
+                {request?.request_status === 'pending' ? (
+                  <button 
+                    className="btn btn-primary" 
+                    onClick={() => document.getElementById("my_modal_1").showModal()}
+                  >
+                    Donate
+                  </button>
+                ) : (
+                  <button className="btn btn-primary" disabled>
+                    In Progress
+                  </button>
+                )}
               </>
-            )
-            }
+            )}
 
             <dialog id="my_modal_1" className="modal">
               <div className="modal-box">
@@ -92,16 +95,15 @@ const RequestsDetails = () => {
                   <legend className="fieldset-legend">Donation Form</legend>
 
                   <label className="label">Donor Name</label>
-                  <input defaultValue={user?.displayName || "displayName"} type="email" className="input" placeholder="Email" readOnly disabled />
+                  <input defaultValue={user?.displayName || "displayName"} type="text" className="input" placeholder="Name" readOnly disabled />
 
                   <label className="label">Donor Email</label>
-                  <input defaultValue={user?.email} type="email" className="input" placeholder="Password" readOnly disabled />
+                  <input defaultValue={user?.email} type="email" className="input" placeholder="Email" readOnly disabled />
 
                   <button className="btn btn-neutral mt-4">Confirm</button>
                 </form>
                 <div className="modal-action">
                   <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
                     <button className="btn">Close</button>
                   </form>
                 </div>
