@@ -4,6 +4,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import { Link, NavLink } from "react-router";
 import { FaHeartPulse } from "react-icons/fa6";
 
+// Updated
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
 
