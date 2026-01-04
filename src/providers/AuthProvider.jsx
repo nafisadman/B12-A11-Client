@@ -1,9 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
-import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  updateProfile, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  signOut,
+  GoogleAuthProvider, 
+  signInWithPopup     
+} from "firebase/auth";
 import axios from "axios";
 
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider(); 
 
 export const AuthContext = createContext();
 
@@ -15,8 +25,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState("");
 
-  // Form Functions
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -25,10 +35,17 @@ const AuthProvider = ({ children }) => {
   };
 
   const signIn = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const googleLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -51,10 +68,12 @@ const AuthProvider = ({ children }) => {
       
       axios.get(`https://b12-a11-server-tan.vercel.app/users/role/${user.email}`)
         .then((res) => {
-          console.log('AuthProvider.jsx: ', res.data.role);
-          setName(res.data.name);
-          setRole(res.data.role);
-          setUserStatus(res.data.status);
+          if(res.data) {
+             console.log('AuthProvider.jsx: ', res.data.role);
+             setName(res.data.name);
+             setRole(res.data.role);
+             setUserStatus(res.data.status);
+          }
         })
         .finally(() => {
           setRoleLoading(false); 
@@ -71,6 +90,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     updateUser,
     signIn,
+    googleLogin, 
     logOut,
     roleLoading,
     userStatus,
