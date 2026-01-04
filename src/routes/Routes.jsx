@@ -18,6 +18,7 @@ import Requests from "../pages/Home/Requests";
 import Profile from "../pages/Dashboard/Profile";
 import AllBloodDonationReq from "../pages/Dashboard/AllBloodDonationReq";
 import RequestsDetails from "../pages/Home/RequestsDetails";
+import Resources from "../pages/Home/Resources/Resources";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/requests/:id",
-        element: <PrivateRoute><RequestsDetails></RequestsDetails></PrivateRoute>,
+        element: <RequestsDetails></RequestsDetails>,
       },
       {
         path: "/donate",
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         path: "/payment-cancelled",
         Component: PaymentCancelled,
       },
+      {
+        path: "/resources",
+        Component: Resources,
+      }
     ],
   },
   {

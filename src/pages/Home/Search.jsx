@@ -98,7 +98,7 @@ const Search = () => {
       {/* Search Results */}
       <div className="min-h-screen">
         {/* Container */}
-        <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {searchResults.map((searchResult) => (
             <div className="card bg-base-100 w-full shadow-sm">
               <div className="card-body">
