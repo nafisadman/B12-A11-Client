@@ -88,7 +88,7 @@ const Registration = () => {
       };
 
       if (res.data.success) {
-        // Create User
+        // Firebase
         createUser(email, password)
           .then((result) => {
             const user = result.user;

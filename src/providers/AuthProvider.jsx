@@ -19,9 +19,9 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState("");
   const [roleLoading, setRoleLoading] = useState(true);
   const [name, setName] = useState("");
-  const [role, setRole] = useState("");
   const [loading, setLoading] = useState(true);
   const [userStatus, setUserStatus] = useState("");
 
